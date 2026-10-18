@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Öğretmenin Dijital Çantası</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
+    body { background-color: #f8fafc; color: #1e293b; min-height: 100vh; }
+    .app-container { display: flex; min-height: 100vh; }
+    .sidebar { width: 260px; background-color: #0f172a; color: #f8fafc; padding: 24px 16px; display: flex; flex-direction: column; flex-shrink: 0; }
+    .brand { display: flex; align-items: center; gap: 12px; margin-bottom: 32px; }
+    .avatar-badge { width: 44px; height: 44px; border-radius: 12px; background: #3b82f6; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 1.1rem; }
+    .brand-text h2 { font-size: 1.05rem; }
+    .brand-text span { font-size: 0.75rem; color: #94a3b8; }
+    .nav-menu { display: flex; flex-direction: column; gap: 8px; flex: 1; }
+    .nav-item { display: flex; align-items: center; gap: 12px; color: #cbd5e1; text-decoration: none; padding: 10px 14px; border-radius: 8px; font-size: 0.9rem; transition: all 0.2s; }
+    .nav-item:hover, .nav-item.active { background-color: #1e293b; color: #ffffff; }
+    .sidebar-footer { font-size: 0.75rem; color: #64748b; text-align: center; }
+    .main-content { flex: 1; padding: 32px; overflow-y: auto; }
+    .topbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; }
+    .subtitle { color: #64748b; font-size: 0.9rem; margin-top: 4px; }
+    .date-badge { background: #e2e8f0; padding: 6px 14px; border-radius: 20px; font-size: 0.85rem; font-weight: 500; }
+    .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-bottom: 24px; }
+    .stat-card { background: #ffffff; padding: 20px; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); display: flex; align-items: center; gap: 16px; }
+    .stat-icon { width: 44px; height: 44px; border-radius: 10px; display: flex; align-items: center; justify-content: center; color: #fff; }
+    .bg-blue { background: #3b82f6; }
+    .bg-emerald { background: #10b981; }
+    .bg-purple { background: #8b5cf6; }
+    .stat-label { font-size: 0.8rem; color: #64748b; }
+    .content-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+    .card { background: #ffffff; border-radius: 12px; padding: 20px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
+    .card-header h2 { font-size: 1.1rem; margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
+    .input-group { display: flex; gap: 8px; margin-bottom: 16px; }
+    .input-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 16px; }
+    .input-grid input:last-of-type, .input-grid button { grid-column: span 2; }
+    input, textarea { width: 100%; padding: 10px 14px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 0.9rem; outline: none; }
+    input:focus, textarea:focus { border-color: #3b82f6; }
+    .btn { background: #3b82f6; color: white; border: none; padding: 10px 16px; border-radius: 8px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px; font-weight: 500; transition: 0.2s; }
+    .btn:hover { background: #2563eb; }
+    .item-list { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+    .item-list li, .schedule-item { display: flex; align-items: center; justify-content: space-between; padding: 10px 12px; background: #f8fafc; border-radius: 8px; font-size: 0.9rem; }
+    .schedule-item { margin-bottom: 8px; }
+    .btn-del { background: none; border: none; color: #ef4444; cursor: pointer; font-weight: 600; }
+    .mt-4 { margin-top: 24px; }
+    @media (max-width: 850px) {
+      .app-container { flex-direction: column; }
+      .sidebar { width: 100%; }
+      .content-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="app-container">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="avatar-badge">ÖÇ</div>
+        <div class="brand-text">
+          <h2>Dijital Çantam</h2>
+          <span>Öğretmen Takip Sistemi</span>
+        </div>
+      </div>
+      <nav class="nav-menu">
+        <a href="#genel-bakis" class="nav-item active"><i data-lucide="layout-dashboard"></i> Genel Bakış</a>
+        <a href="#gorevler" class="nav-item"><i data-lucide="check-square"></i> Görevlerim</a>
+        <a href="#program" class="nav-item"><i data-lucide="calendar"></i> Ders Programı</a>
+        <a href="#notlar" class="nav-item"><i data-lucide="file-text"></i> Not Defterim</a>
+      </nav>
+      <div class="sidebar-footer">
+        <small>Veriler tarayıcınızda saklanır.</small>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <header class="topbar">
+        <div>
+          <h1>Hoş Geldiniz</h1>
+          <p class="subtitle">Her şey yerli yerinde; biraz düzen, biraz zaman.</p>
+        </div>
+        <div class="date-badge" id="currentDate"></div>
+      </header>
+
+      <section class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-icon bg-blue"><i data-lucide="clock"></i></div>
+          <div>
+            <span class="stat-label">Bekleyen Görev</span>
+            <h3 id="statTasks">0</h3>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon bg-emerald"><i data-lucide="calendar-days"></i></div>
+          <div>
+            <span class="stat-label">Haftalık Ders</span>
+            <h3 id="statLessons">0</h3>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon bg-purple"><i data-lucide="file-text"></i></div>
+          <div>
+            <span class="stat-label">Kayıtlı Notlar</span>
+            <h3 id="statNotes">0</h3>
+          </div>
+        </div>
+      </section>
+
+      <div class="content-grid">
+        <section class="card" id="gorevler">
+          <div class="card-header">
+            <h2><i data-lucide="check-square"></i> Yapılacak Görevler</h2>
+          </div>
+          <form id="taskForm" class="input-group">
+            <input type="text" id="taskInput" placeholder="Yeni görev ekle..." required>
+            <button type="submit" class="btn"><i data-lucide="plus"></i> Ekle</button>
+          </form>
+          <ul id="taskList" class="item-list"></ul>
+        </section>
+
+        <section class="card" id="program">
+          <div class="card-header">
+            <h2><i data-lucide="calendar"></i> Ders Programı</h2>
+          </div>
+          <form id="scheduleForm" class="input-grid">
+            <input type="text" id="lessonDay" placeholder="Gün (Örn: Pazartesi)" required>
+            <input type="text" id="lessonTime" placeholder="Saat (Örn: 09:00)" required>
+            <input type="text" id="lessonName" placeholder="Ders / Sınıf" required>
+            <button type="submit" class="btn"><i data-lucide="plus"></i> Ders Ekle</button>
+          </form>
+          <div id="scheduleList" class="schedule-list"></div>
+        </section>
+      </div>
+
+      <section class="card mt-4" id="notlar">
+        <div class="card-header">
+          <h2><i data-lucide="file-text"></i> Hızlı Not Defteri</h2>
+        </div>
+        <textarea id="quickNotes" rows="5" placeholder="Notlarınızı buraya yazabilirsiniz..."></textarea>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      if (window.lucide) lucide.createIcons();
+
+      const dateEl = document.getElementById("currentDate");
+      const now = new Date();
+      dateEl.innerText = now.toLocaleDateString("tr-TR", { weekday: "long", year: "numeric", month: "long", day: "numeric" });
+
+      const taskForm = document.getElementById("taskForm");
+      const taskInput = document.getElementById("taskInput");
+      const taskList = document.getElementById("taskList");
+      const statTasks = document.getElementById("statTasks");
+      let tasks = JSON.parse(localStorage.getItem("ogretmen_tasks")) || [];
+
+      function renderTasks() {
+        taskList.innerHTML = "";
+        tasks.forEach((t, i) => {
+          const li = document.createElement("li");
+          li.innerHTML = `<span>${t}</span><button class="btn-del" onclick="deleteTask(${i})">Sil</button>`;
+          taskList.appendChild(li);
+        });
+        statTasks.innerText = tasks.length;
+        localStorage.setItem("ogretmen_tasks", JSON.stringify(tasks));
+      }
+      window.deleteTask = (i) => { tasks.splice(i, 1); renderTasks(); };
+
+      taskForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+        if (taskInput.value.trim()) {
+          tasks.push(taskInput.value.trim());
+          taskInput.value = "";
+          renderTasks();
+        }
+      });
+
+      const scheduleForm = document.getElementById("scheduleForm");
+      const lessonDay = document.getElementById("lessonDay");
+      const lessonTime = document.getElementById("lessonTime");
+      const lessonName = document.getElementById("lessonName");
+      const scheduleList = document.getElementById("scheduleList");
+      const statLessons = document.getElementById("statLessons");
+      let lessons = JSON.parse(localStorage.getItem("ogretmen_lessons")) || [];
+
+      function renderLessons() {
+        scheduleList.innerHTML = "";
+        lessons.forEach((l, i) => {
+          const div = document.createElement("div");
+          div.className = "schedule-item";
+          div.innerHTML = `<div><strong>${l.day} - ${l.time}</strong><p style="color: #64748b; font-size: 0.85rem;">${l.name}</p></div><button class="btn-del" onclick="deleteLesson(${i})">Sil</button>`;
+          scheduleList.appendChild(div);
+        });
+        statLessons.innerText = lessons.length;
+        localStorage.setItem("ogretmen_lessons", JSON.stringify(lessons));
+      }
+      window.deleteLesson = (i) => { lessons.splice(i, 1); renderLessons(); };
+
+      scheduleForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+        if (lessonDay.value && lessonTime.value && lessonName.value) {
+          lessons.push({ day: lessonDay.value.trim(), time: lessonTime.value.trim(), name: lessonName.value.trim() });
+          lessonDay.value = ""; lessonTime.value = ""; lessonName.value = "";
+          renderLessons();
+        }
+      });
+
+      const quickNotes = document.getElementById("quickNotes");
+      const statNotes = document.getElementById("statNotes");
+      quickNotes.value = localStorage.getItem("ogretmen_notes") || "";
+      statNotes.innerText = quickNotes.value.trim() ? "1" : "0";
+      quickNotes.addEventListener("input", () => {
+        localStorage.setItem("ogretmen_notes", quickNotes.value);
+        statNotes.innerText = quickNotes.value.trim() ? "1" : "0";
+      });
+
+      renderTasks();
+      renderLessons();
+    });
+  </script>
+</body>
+</html>
